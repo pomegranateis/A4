@@ -1,0 +1,29 @@
+name: Secure Docker Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t my-secure-app .
+
+      - name: Push to Docker Hub
+        if: github.ref == 'refs/heads/main'
+        uses: docker/build-push-action@v5
+        with:
+          push: true
+          tags: pomegranatei/my-secure-app
+          secrets: |
+            {
+              "username": "${{ secrets.DOCKERHUB_USERNAME }}",
+              "password": "${{ secrets.DOCKERHUB_TOKEN }}"
+            }
