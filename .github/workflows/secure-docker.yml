@@ -17,13 +17,10 @@ jobs:
         run: docker build -t my-secure-app .
 
       - name: Push to Docker Hub
-        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v5
         with:
           push: true
           tags: pomegranatei/my-secure-app
-          secrets: |
-            {
-              "username": "${{ secrets.DOCKERHUB_USERNAME }}",
-              "password": "${{ secrets.DOCKERHUB_TOKEN }}"
-            }
+        secrets:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
