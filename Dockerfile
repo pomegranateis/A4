@@ -1,7 +1,6 @@
 FROM node:20-alpine
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-# comments
 WORKDIR /app
 
 COPY package*.json ./
